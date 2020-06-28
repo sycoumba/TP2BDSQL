@@ -1,0 +1,265 @@
+table client:
+MariaDB [banque_peuple]> create table client(id_client int not null primary keyauto_increment,
+    -> adresse varchar(25) not null,
+    -> telephone varchar(25) not null,
+    -> email varchar(25) not null);
+Query OK, 0 rows affected (0.586 sec)
+
+table client salarie:
+MariaDB [banque_peuple]> create table client_salarie(id_salarie int not null primary key auto_increment,
+    -> nom varchar(50) not null,
+    -> prenom varchar(50) not null,
+    -> profession varchar(25),
+    -> salaire_actuel double not null,
+    -> nom_entreprise varchar(25) not null,
+    -> adresse_entreprise varchar(25) not null,
+    -> identifiant_entreprise varchar(25),
+    -> numero_CNI int not null);
+Query OK, 0 rows affected (0.845 sec)
+MariaDB [banque_peuple]> alter table client_salarie add column id_client int not
+ null;
+Query OK, 0 rows affected (0.358 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table client_salarie add constraint foreign key(i
+d_client) references client(id_client);
+Query OK, 0 rows affected (1.148 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table client non salarie:
+MariaDB [banque_peuple]> create table client_salarie(id_salalirie int not null p
+rimary key auto_increment,
+    -> nom varchar(50) not null,
+    -> prenom varchar(50) not null,
+    -> profession varchar(25),
+    -> salaire_actuel double not null,
+    -> nom_entreprise varchar(25) not null,
+    -> adresse_entreprise varchar(25) not null,
+    -> identifiant_entreprise varchar(25),
+    -> numero_CNI int not null);
+Query OK, 0 rows affected (0.845 sec)
+MariaDB [banque_peuple]> alter table client_non_salarie add column id_client int
+ not null;
+Query OK, 0 rows affected (0.115 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table client_non_salarie add constraint foreign k
+ey(id_client) references client(id_client);
+Query OK, 0 rows affected (1.459 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+table client moral:
+MariaDB [banque_peuple]> create table client_moral(id_entreprise int not null pr
+imary key auto_increment,
+    -> nom_entreprise varchar(50) not null,
+    -> type_entreprise varchar(25) not null,
+    -> raison_social varchar(25) not null,
+    -> identifiant_entreprise varchar(25) not null,
+    -> adresse_entreprise varchar(25) not null);
+Query OK, 0 rows affected (0.581 sec)
+MariaDB [banque_peuple]> alter table client_moral add column id_client int not n
+ull;
+Query OK, 0 rows affected (0.374 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table client_moral add constraint foreign key(id_
+client) references client(id_client);
+Query OK, 0 rows affected (1.269 sec)
+Records: 0  Duplicates_: 0  Warnings: 0
+
+
+table administrateur:
+MariaDB [banque_peuple]> create table administrateur(id_administrateur int not n
+ull primary key auto_increment,
+    -> login_administrateur varchar(25) not null,
+    -> mot_de_passe varchar(25) not null);
+Query OK, 0 rows affected (0.284 sec)
+
+table responsable compte:
+MariaDB [banque_peuple>create table responsable_compte(id_responsable int not
+null primary key auto_increment,
+    -> login_responsable_compte varchar(25) not null,
+    -> mot_de_passe varchar(25) not null);
+Query OK, 0 rows affected (0.328 sec)
+MariaDB [banque_peuple]> alter table comptes add column id_responsable int not n
+ull;
+Query OK, 0 rows affected (0.181 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table comptes add constraint foreign key(id_respo
+nsable) references responsable_compte(id_responsable);
+Query OK, 0 rows affected (1.223 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table caissiere:
+MariaDB [banque_peuple]> create table caissiere(id_caissiere int not null primary key auto_increment,
+    -> login_caissiere varchar(25) not null,
+    -> mot_de_passe varchar(25) not null);
+Query OK, 0 rows affected (0.369 sec)
+
+
+table employe:
+MariaDB [banque_peuple]> create table employe(id_employe int not null primary ke
+y auto_increment,
+    -> nom varchar(50) not null,
+    -> prenom varchar(50) not null,
+    -> adresse varchar(25) not null,
+    -> telephone varchar(25) not null,
+    -> email varchar(25) not null);
+Query OK, 0 rows affected (0.359 sec)
+MariaDB [banque_peuple]> alter table employe add column id_agence int not null;
+Query OK, 0 rows affected (0.178 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table employe add constraint foreign key(id_agenc
+e) references agence(id_agence);
+Query OK, 0 rows affected (1.447 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table comptes:
+MariaDB [banque_peuple]> create table comptes(id_compte int not null primary key
+ auto_increment,
+    -> numero_compte varchar(45) not null,
+    -> cle_rib int not null,
+    -> solde_compte int not null,
+    -> numero_agence int not null,
+    -> date_ouverture date not null);
+Query OK, 0 rows affected (0.354 sec)
+MariaDB [banque_peuple]> alter table comptes add column id_responsable int not n
+ull;
+Query OK, 0 rows affected (0.181 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table comptes add constraint foreign key(id_respo
+nsable) references responsable_compte(id_responsable);
+Query OK, 0 rows affected (1.223 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table comptes add column id_client int not null;
+Query OK, 0 rows affected (0.113 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table comptes add constraint foreign key(id_client) references client(id_client);
+Query OK, 0 rows affected (1.467 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table compte epargne:
+MariaDB [banque_peuple]> create table compte_epargne(id_compte_epargne int not n
+ull primary key auto_increment,
+    -> frais_ouverture double not null,
+    -> montant_remuneration int not null);
+Query OK, 0 rows affected (0.365 sec)
+MariaDB [banque_peuple]> alter table compte_epargne add column id_compte int not
+ null;
+Query OK, 0 rows affected (0.228 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table compte_epargne add constraint foreign key(i
+d_compte) references comptes(id_compte);
+Query OK, 0 rows affected (1.692 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table compte courant:
+MariaDB [banque_peuple]> create table compte_courant(id_compte_courant int not n
+ull primary key auto_increment,
+    -> agios int not null);
+Query OK, 0 rows affected (0.377 sec)
+MariaDB [banque_peuple]> alter table compte_courant add column id_compte int not
+ null;
+Query OK, 0 rows affected (0.172 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table compte_courant add constraint foreign key(i
+d_compte) references comptes(id_compte);
+Query OK, 0 rows affected (1.268 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table compte bloque:
+MariaDB [banque_peuple]> create table compte_bloque(id_compte_bloque int not nul
+l primary key auto_increment,
+    -> frais_ouverture double not null,
+    -> delai_blocage date not null,
+    -> montant_remuneration int not null);
+Query OK, 0 rows affected (0.553 sec)
+MariaDB [banque_peuple]> alter table compte_bloque add column id_compte int not
+null;
+Query OK, 0 rows affected (0.116 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [banque_peuple]> alter table compte_bloque add constraint foreign key(id
+_compte) references comptes(id_compte);
+Query OK, 0 rows affected (1.240 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table etat compte:
+MariaDB [banque_peuple]> create table etat_compte(id_etat_compte int not null pr
+imary key auto_increment,
+    -> etat_compte varchar(25) not null,
+    -> date_changement_etat date not null);
+
+table profil employe:
+MariaDB [banque_peuple]> create table profil_employe(id_profil int not null prim
+ary key auto_increment,
+    -> nom_fonction varchar(25),
+    -> date_debut_fonction date not null);
+Query OK, 0 rows affected (0.355 sec)
+MariaDB [banque_peuple]> alter table profil_employe add column id_employe int no
+t null;
+Query OK, 0 rows affected (0.328 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table profil_employe add constraint foreign key(i
+d_employe) references employe(id_employe);
+Query OK, 0 rows affected (2.182 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table agios:
+MariaDB [banque_peuple]> create table agios(id_agios int not null primary key au
+to_increment,
+    -> montant double not null,
+    -> taux int not null);
+Query OK, 0 rows affected (0.359 sec)
+Query OK, 0 rows affected (0.327 sec)
+
+table operation compte:
+MariaDB [banque_peuple]> create table operation_compte(id_operation_compte int n
+ot null primary key auto_increment,
+    -> type_opertaion varchar(25) not null,
+    -> montant_operation double not null,
+    -> id_compte_destinataire int not null,
+    -> id_employe int not null,
+    -> date_operation date not null);
+Query OK, 0 rows affected (0.321 sec)
+MariaDB [banque_peuple]> alter table operation_compte add column id_caissiere in
+t not null;
+Query OK, 0 rows affected (0.210 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table operation_compte add constraint foreign key
+(id_caissiere) references caissiere(id_caissiere);
+Query OK, 0 rows affected (1.267 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table operation_compte add column id_compte int not null;
+Query OK, 0 rows affected (0.160 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+MariaDB [banque_peuple]> alter table operation_compte add constraint foreign key(id_compte) references comptes(id_compte);
+Query OK, 0 rows affected (1.283 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+table agence:
+MariaDB [banque_peuple]> create table agence(id_agence int not null primary key
+auto_increment,
+    -> adresse varchar(25) not null,
+    -> id_admin int not null);
+Query OK, 0 rows affected (0.289 sec)
+MariaDB [banque_peuple]> alter table agence add column id_administrateur int not
+ null;
+Query OK, 0 rows affected (0.139 sec)
+Records: 0  Duplicates: 0  Warnings : 0
+MariaDB [banque_peuple]> alter table agence add constraint foreign key(id_admini
+strateur) references administrateur(id_administrateur);
+Query OK, 0 rows affected (1.262 sec)
+Records: 0  Duplicates: 0  Warnings: 0
